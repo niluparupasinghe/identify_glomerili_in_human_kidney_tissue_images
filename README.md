@@ -1,5 +1,11 @@
 # identify_glomerili_in_human_kidney_tissue_images
+The challenge is to detect functional tissue units (FTUs) across different tissue preparation pipelines. An FTU is defined as a “three-dimensional block of cells centered around a capillary, such that each cell in this block is within diffusion distance from any other cell in the same block” (de Bono, 2013). The goal is the implementation of a successful and robust glomeruli FTU detector.
+
 This is a semantic segmentation task to identify glomeruli in a given kidney tissue image. This is done as a part of a Kaggle competition. The provided images were really large images with average size is equal to 25 x 30 (k). Such image does not fit in the memory for processing. However one image contained a large number of gromeruli and by tiling the large image in to small set of images created a reasonably managable and representative training and testing image data sets. Therefore the solution is mainly consist of two steps.
+
+Example of original iamge and its mask (31299 x 44066 pixels)
+![image](https://user-images.githubusercontent.com/74288317/141694937-c3ab106f-2df2-43b4-9f43-af09a3490db5.png)
+
 
 Step 01: Create tiled images datasets
 =====================================
@@ -34,6 +40,14 @@ Example of a prediction in the test set using the saved model
 From left to right, The original image, its orignal mask and the predicted mask using the trained Unnet model
 ![image](https://user-images.githubusercontent.com/74288317/141658343-f03091f8-29c5-4eec-b659-b88595cc315e.png)
 
+Evaluation Metric
+==================
+This is evaluated on the mean Dice coefficient. The Dice coefficient can be used to compare the pixel-wise agreement between a predicted segmentation and its corresponding ground truth. The formula is given by:
+
+![image](https://user-images.githubusercontent.com/74288317/141693111-689569fe-e161-4853-9544-97610cff18aa.png)
+
+where X is the predicted set of pixels and Y is the ground truth. The Dice coefficient is defined to be 1 when both X and Y are empty. The leaderboard score is the mean of the Dice coefficients for each image in the test set.
+
 Results
 ========
-- Dice coefficient: 0.86 (out ot 1.00)
+- Dice coefficient: 0.86
